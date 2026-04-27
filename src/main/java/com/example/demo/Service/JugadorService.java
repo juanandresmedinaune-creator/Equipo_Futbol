@@ -9,4 +9,6 @@ public interface JugadorService {
     JugadorDTO save(JugadorDTO dto);
     Optional<JugadorDTO> getById(Long id);
     void delete(Long id);
+    List<JugadorDTO> getJugadoresByEquipo(Long equipoId);
+    List<JugadorDTO> obtenerGoleadores(int minGoles);
 }

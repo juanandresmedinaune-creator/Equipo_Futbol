@@ -39,6 +39,19 @@ public class JugadorServiceImpl implements JugadorService {
     }
 
     @Override
+    public List<JugadorDTO> getJugadoresByEquipo(Long equipoId) {
+        return repository.findByEquipoNative(equipoId).stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<JugadorDTO> obtenerGoleadores(int minGoles) {
+        return repository.findGoleadores(minGoles).stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+    @Override
     public List<JugadorDTO> getAll() {
         return repository.findAll().stream()
                 .map(this::toDTO)

@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.DTO.PartidoDTO;
+import com.example.demo.DTO.PartidoDetalleDTO;
 import com.example.demo.Model.Partido;
 import com.example.demo.Repository.PartidoRepository;
 import org.springframework.stereotype.Service;
@@ -61,5 +62,19 @@ public class PartidoServiceImpl implements PartidoService {
         if (!repository.existsById(id))
             throw new IllegalStateException("Partido con id " + id + " no existe");
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<PartidoDetalleDTO> obtenerResultadosConNombres() {
+        List<Object[]> resultados = repository.findPartidosConNombresNative();
+        return resultados.stream().map(row -> new PartidoDetalleDTO(
+                ((Number) row[0]).longValue(), // idPartido
+                (String) row[1],               // fecha
+                (String) row[2],               // estadio
+                (String) row[3],               // nombre equipo local
+                (String) row[4],               // nombre equipo visita
+                ((Number) row[5]).intValue(),  // goles local
+                ((Number) row[6]).intValue()   // goles visita
+        )).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.DTO.PartidoDTO;
+import com.example.demo.DTO.PartidoDetalleDTO;
 import com.example.demo.Service.PartidoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,10 @@ public class PartidoController {
         return service.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/resultados")
+    public List<PartidoDetalleDTO> getResultados() {
+        return service.obtenerResultadosConNombres();
     }
 
     @PostMapping

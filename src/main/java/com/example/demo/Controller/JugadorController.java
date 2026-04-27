@@ -5,15 +5,26 @@ import com.example.demo.Service.JugadorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/jugadores")
+
 public class JugadorController {
 
     private final JugadorService service;
 
     public JugadorController(JugadorService service) {
+
         this.service = service;
+    }
+
+    @GetMapping("/equipo/{id}")
+    public ResponseEntity<List<JugadorDTO>> getByEquipo(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getJugadoresByEquipo(id));
+    }
+    @GetMapping("/goleadores")
+    public List<JugadorDTO> getGoleadores(@RequestParam int minGoles) {
+        return service.obtenerGoleadores(minGoles);
     }
 
     @GetMapping
